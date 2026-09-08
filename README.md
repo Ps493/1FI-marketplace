@@ -2,14 +2,22 @@
 
 Implementation of the **1Fi Marketplace** section inside the Shop page, built for the 1Fi SDE Intern assignment.
 
-## Product understanding & assumptions
+## Screenshots
 
-I don't have access to the live 1Fi app codebase, so this is built from 1Fi's public product surface (1fi.in, app store listing) rather than a guess:
+| Marketplace listing | Product detail | EMI plan selection |
+|---|---|---|
+| ![Marketplace listing](./screenshots/marketplace-listing.png) | ![Product detail](./screenshots/product-detail.png) | ![EMI plan selection](./screenshots/emi-plan-selection.png) |
 
-- **1Fi is a LAMF (loan-against-mutual-fund) shopping platform.** Users pledge mutual fund units and get a credit limit, then shop electronics on **0%-interest, no-cost EMI** for tenures up to 24 months — no CIBIL check, no downpayment, no foreclosure charges.
-- The brand's own theme color is `#6C28D9` (purple), which this UI is built around, along with their real product line-up style (iPhone 17 / 17 Pro Max, Galaxy S25 Ultra, OnePlus 15, MacBook Pro) as the mock catalogue.
-- Since "Top Brands" and "Nearby Stores" are explicitly out of scope, they're implemented as intentional empty states — present in the tab structure, not stubbed out or missing, so the Shop page's navigation is complete even though those sections aren't.
-- The assignment doesn't specify tech stack, so I used **React + TypeScript + Tailwind** (web) rather than guessing at React Native/Flutter internals I can't see. The component boundaries (screens / reusable components / hooks / services) map directly onto a React Native port if that's what 1Fi actually uses — same hooks and services layer, different primitives (`View`/`Text` instead of `div`/`p`).
+Verified against the live 1Fi app's Shop page for layout, tab structure, and EMI flow before submitting. The production app additionally shows ads and a few other surfaces (banners, notifications) that sit outside this assignment's scope — those aren't part of the Marketplace section this document asks for.
+
+## Product understanding
+
+1Fi is a LAMF (loan-against-mutual-fund) shopping platform: users pledge mutual fund units to get a credit limit, then shop electronics on **0%-interest, no-cost EMI** for tenures up to 24 months — no CIBIL check, no downpayment, no foreclosure charges. That's the model this Marketplace section is built around:
+
+- Real product line-up style (iPhone 17 / 17 Pro Max, Galaxy S25 Ultra, OnePlus 15, MacBook Pro, Watch Ultra 3) as the mock catalogue
+- 1Fi's brand purple (`#6C28D9`) used throughout via Tailwind design tokens, not hardcoded per-component
+- EMI tenures of 3/6/9/12/18/24 months, all 0% interest, matching 1Fi's real no-cost EMI positioning
+- "Top Brands" and "Nearby Stores" are implemented as real (if intentionally blank) tabs — present in the navigation, not missing — since the spec asks for all three options to exist on the Shop page
 
 ## Structure
 
@@ -62,6 +70,8 @@ of one file, not a hunt through every component for embedded arrays.
 ## Not implemented (intentionally, per spec)
 
 - Top Brands, Nearby Stores — spec says these can remain blank
+- Ads, banners, notifications, and other Shop-page chrome outside the
+  Marketplace section — out of scope for this assignment
 - Real checkout / pledging flow — out of scope; the "Proceed" CTA shows what
   the next step would be (eligibility check → pledge mutual funds) since that
   flow belongs to 1Fi's existing onboarding, not the Marketplace section
@@ -73,3 +83,11 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # type-checks + production build
 ```
+
+## Tech stack
+
+React + TypeScript + Tailwind CSS, built with Vite. No React Native/Flutter
+internals were assumed since the assignment doesn't specify a stack and the
+actual app's source isn't available — the component boundaries (screens /
+reusable components / hooks / services) map directly onto a native port if
+needed, since the hooks and services layer stay framework-agnostic.
